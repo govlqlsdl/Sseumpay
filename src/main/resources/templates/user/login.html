@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/noheader}">
+
+<section layout:fragment="contents">
+    <div class="container text-center mt-5">
+  <h1 class="font-weight-bold display-4">씀페이</h1>
+  <h4 class="text-muted font-weight-bold mb-3">SSEUMPAY</h4>
+  <p class="mb-4">오늘의 지출을 빠르게 기록하고<br>통계로 확인해보세요.</p>
+
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-sm-10">
+      <input type="text" class="form-control mb-2" placeholder="아이디">
+      <input type="password" class="form-control mb-3" placeholder="비밀번호">
+      <button type="submit" class="btn btn-info btn-block font-weight-bold">로그인</button>
+      <p class="mt-3 mb-0">아직 회원이 아니신가요? <a href="/user/join-view">회원가입</a></p>
+    </div>
+  </div>
+</div>
+</section>
