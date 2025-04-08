@@ -5,17 +5,59 @@
 
 <section layout:fragment="contents">
     <div class="container text-center mt-5">
-  <h1 class="font-weight-bold display-4">씀페이</h1>
-  <h4 class="text-muted font-weight-bold mb-3">SSEUMPAY</h4>
-  <p class="mb-4">오늘의 지출을 빠르게 기록하고<br>통계로 확인해보세요.</p>
+        <h1 class="font-weight-bold display-4">씀페이</h1>
+        <h4 class="text-muted font-weight-bold mb-3">SSEUMPAY</h4>
+        <p class="mb-4">오늘의 지출을 빠르게 기록하고<br>통계로 확인해보세요.</p>
 
-  <div class="row justify-content-center">
-    <div class="col-md-6 col-sm-10">
-      <input type="text" class="form-control mb-2" placeholder="아이디">
-      <input type="password" class="form-control mb-3" placeholder="비밀번호">
-      <button type="submit" class="btn btn-info btn-block font-weight-bold">로그인</button>
-      <p class="mt-3 mb-0">아직 회원이 아니신가요? <a href="/user/join-view">회원가입</a></p>
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-sm-10">
+                <form id="loginForm">
+                    <input type="text" id="idInput" class="form-control mb-2" placeholder="아이디">
+                    <input type="password" id="passwordInput" class="form-control mb-3" placeholder="비밀번호">
+                    <button type="submit" class="btn btn-info btn-block font-weight-bold">로그인</button>
+                </form>
+                <p class="mt-3 mb-0">아직 회원이 아니신가요? <a href="/user/join-view">회원가입</a></p>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 </section>
+
+<script layout:fragment="script">
+    $(function() {
+        $("#loginForm").on("submit", function(e) {
+            e.preventDefault();
+
+            let id = $("#idInput").val();
+            let password = $("#passwordInput").val();
+
+            if (id === "") {
+                alert("아이디를 입력하세요");
+                return;
+            }
+
+            if (password === "") {
+                alert("비밀번호를 입력하세요");
+                return;
+            }
+
+            $.ajax({
+                type: "post",
+                url: "/user/login",
+                data: {
+                    "loginId": id,
+                    "password": password
+                },
+                success: function(response) {
+                    if (response.result === "success") {
+                        location.href = "/expense/calendar-view";
+                    } else {
+                        alert("아이디 또는 비밀번호를 확인하세요.");
+                    }
+                },
+                error: function() {
+                    alert("로그인 에러 발생!");
+                }
+            });
+        });
+    });
+</script>

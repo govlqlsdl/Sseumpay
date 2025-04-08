@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kobi.sseumpay.user.repository.UserRepository">
+
+    <!-- 1. 회원가입 -->
+    <insert id="insertUser" parameterType="map">
+        INSERT INTO `user`
+        (
+            `loginId`, `password`, `name`, `email`, `birthDate`
+        )
+        VALUES
+        (
+            #{loginId}, #{password}, #{name}, #{email}, #{birthDate}
+        )
+    </insert>
+
+    <!-- 2. ID 중복확인 -->
+    <select id="selectCountByLoginId" parameterType="string" resultType="int">
+        SELECT COUNT(*)
+        FROM `user`
+        WHERE `loginId` = #{loginId}
+    </select>
+
+    <!-- 3. 로그인 (ID + PW로 유저 조회) -->
+    <select id="selectUser" parameterType="map"
+            resultType="com.kobi.sseumpay.user.domain.User">
+        SELECT 
+            `id`, `loginId`, `password`, `name`, `email`, `birthDate`, `createdAt`, `updatedAt`
+        FROM `user`
+        WHERE `loginId` = #{loginId}
+        AND `password` = #{password}
+    </select>
+
+    <!-- 4. ID로 유저 조회 -->
+    <select id="selectUserById" parameterType="int"
+            resultType="com.kobi.sseumpay.user.domain.User">
+        SELECT 
+            `id`, `loginId`, `password`, `name`, `email`, `birthDate`, `createdAt`, `updatedAt`
+        FROM `user`
+        WHERE `id` = #{id}
+    </select>
+
+</mapper>
